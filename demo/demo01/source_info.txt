@@ -1,0 +1,10 @@
+Propagating directions of the waves were given by the PDF of the von Mises distribution, 
+\lambda(\omega, \phi) = \frac{e^{\kappa \cos (\phi - \mu)}}{2 \pi I_0(\kappa)}. 
+Concentration parameter \kappa = 11.363 and direction parameter \mu = - \frac{5}{6} \pi were employed. 
+Thus, 
+X_1 = I_1(\kappa) / I_0(\kappa) \cos(1 \mu)   = -0.826993364455399
+Y_1 = - I_1(\kappa) / I_0(\kappa) \sin(1 \mu) = 0.477464841586359
+X_2 = I_2(\kappa) / I_0(\kappa) \cos(2 \mu)   = 0.415961481723778
+Y_2 = - I_2(\kappa) / I_0(\kappa) \cos(2 \mu) = -0.720466420337215
+are the theoretical value.
+
