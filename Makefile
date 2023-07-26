@@ -1,5 +1,5 @@
 cc = g++
-CFLAGS = -Wall -Wextra -O3 -std=c++20
+CFLAGS = -Wall -Wextra -O3 -std=c++20 -pedantic 
 
 SRCDIR = ./src/
 BINDIR = ./bin/
