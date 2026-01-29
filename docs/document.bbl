@@ -1,0 +1,358 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{kimura2023a}{article}{}
+      \name{author}{4}{}{%
+        {{hash=8c667d9622ad5ee2328b54e39a7d3b08}{%
+           family={Kimura},
+           familyi={K\bibinitperiod},
+           given={Harusato},
+           giveni={H\bibinitperiod}}}%
+        {{hash=404ecb000061d43b5fb9c4a57306ff82}{%
+           family={Tomobe},
+           familyi={T\bibinitperiod},
+           given={Haruka},
+           giveni={H\bibinitperiod}}}%
+        {{hash=7682743ce298ef3d8242c524864bbd6f}{%
+           family={Morikawa},
+           familyi={M\bibinitperiod},
+           given={Hitoshi},
+           giveni={H\bibinitperiod}}}%
+        {{hash=adba740a0ea035aabc5cfdcaa8caf928}{%
+           family={Iiyama},
+           familyi={I\bibinitperiod},
+           given={Kahori},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{fe31468e1a067110e0b3728d5f0fe507}
+      \strng{fullhash}{aff87096dbe5b525887ee02ca9485f99}
+      \strng{bibnamehash}{aff87096dbe5b525887ee02ca9485f99}
+      \strng{authorbibnamehash}{aff87096dbe5b525887ee02ca9485f99}
+      \strng{authornamehash}{fe31468e1a067110e0b3728d5f0fe507}
+      \strng{authorfullhash}{aff87096dbe5b525887ee02ca9485f99}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Earth Plantes Space}
+      \field{month}{5}
+      \field{number}{88}
+      \field{title}{{Estimation of phase velocity using array observation of microtremors with arbitrary shape}}
+      \field{volume}{75}
+      \field{year}{2023}
+      \verb{doi}
+      \verb 10.1186/s40623-023-01831-6
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1186/s40623-023-01831-6
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1186/s40623-023-01831-6
+      \endverb
+    \endentry
+    \entry{kimura2023b}{article}{}
+      \name{author}{3}{}{%
+        {{hash=8c667d9622ad5ee2328b54e39a7d3b08}{%
+           family={Kimura},
+           familyi={K\bibinitperiod},
+           given={Harusato},
+           giveni={H\bibinitperiod}}}%
+        {{hash=404ecb000061d43b5fb9c4a57306ff82}{%
+           family={Tomobe},
+           familyi={T\bibinitperiod},
+           given={Haruka},
+           giveni={H\bibinitperiod}}}%
+        {{hash=7682743ce298ef3d8242c524864bbd6f}{%
+           family={Morikawa},
+           familyi={M\bibinitperiod},
+           given={Hitoshi},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{880f5bb1a42208b2be794be5b94010c0}
+      \strng{fullhash}{880f5bb1a42208b2be794be5b94010c0}
+      \strng{bibnamehash}{880f5bb1a42208b2be794be5b94010c0}
+      \strng{authorbibnamehash}{880f5bb1a42208b2be794be5b94010c0}
+      \strng{authornamehash}{880f5bb1a42208b2be794be5b94010c0}
+      \strng{authorfullhash}{880f5bb1a42208b2be794be5b94010c0}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0956-540X}
+      \field{journaltitle}{Geophys. J. Int.}
+      \field{month}{06}
+      \field{number}{1}
+      \field{title}{{Method for estimating azimuthal intensity distribution of microtremors using simple arrays}}
+      \field{volume}{235}
+      \field{year}{2023}
+      \field{pages}{518\bibrangedash 530}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1093/gji/ggad228
+      \endverb
+      \verb{eprint}
+      \verb https://academic.oup.com/gji/article-pdf/235/1/518/50663482/ggad228.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1093/gji/ggad228
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1093/gji/ggad228
+      \endverb
+    \endentry
+    \entry{okada2003}{book}{}
+      \name{author}{1}{}{%
+        {{hash=7d70ee2c4f9c1881b149bc125dd2c31e}{%
+           family={Okada},
+           familyi={O\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Society of Exploration Geophysicists}%
+      }
+      \strng{namehash}{7d70ee2c4f9c1881b149bc125dd2c31e}
+      \strng{fullhash}{7d70ee2c4f9c1881b149bc125dd2c31e}
+      \strng{bibnamehash}{7d70ee2c4f9c1881b149bc125dd2c31e}
+      \strng{authorbibnamehash}{7d70ee2c4f9c1881b149bc125dd2c31e}
+      \strng{authornamehash}{7d70ee2c4f9c1881b149bc125dd2c31e}
+      \strng{authorfullhash}{7d70ee2c4f9c1881b149bc125dd2c31e}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9781560801207}
+      \field{title}{The Microtremor Survey Method}
+      \field{year}{2003}
+      \verb{urlraw}
+      \verb https://books.google.co.jp/books?id=1hAz\_gAlInYC
+      \endverb
+      \verb{url}
+      \verb https://books.google.co.jp/books?id=1hAz%5C_gAlInYC
+      \endverb
+    \endentry
+    \entry{capon1969}{article}{}
+      \name{author}{1}{}{%
+        {{hash=dadcd409b824bce72688b45187861fca}{%
+           family={Capon},
+           familyi={C\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{dadcd409b824bce72688b45187861fca}
+      \strng{fullhash}{dadcd409b824bce72688b45187861fca}
+      \strng{bibnamehash}{dadcd409b824bce72688b45187861fca}
+      \strng{authorbibnamehash}{dadcd409b824bce72688b45187861fca}
+      \strng{authornamehash}{dadcd409b824bce72688b45187861fca}
+      \strng{authorfullhash}{dadcd409b824bce72688b45187861fca}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the IEEE}
+      \field{number}{8}
+      \field{title}{High-resolution frequency-wavenumber spectrum analysis}
+      \field{volume}{57}
+      \field{year}{1969}
+      \field{pages}{1408\bibrangedash 1418}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1109/PROC.1969.7278
+      \endverb
+    \endentry
+    \entry{kennedy1995}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=24fc7a255aa314e71ac724efd7ca5193}{%
+           family={Kennedy},
+           familyi={K\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+        {{hash=21da0cb6f60840b2b15a6264d64909d8}{%
+           family={Eberhart},
+           familyi={E\bibinitperiod},
+           given={Russell},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{66c6dcfa4d8d0a108681f149b4837715}
+      \strng{fullhash}{66c6dcfa4d8d0a108681f149b4837715}
+      \strng{bibnamehash}{66c6dcfa4d8d0a108681f149b4837715}
+      \strng{authorbibnamehash}{66c6dcfa4d8d0a108681f149b4837715}
+      \strng{authornamehash}{66c6dcfa4d8d0a108681f149b4837715}
+      \strng{authorfullhash}{66c6dcfa4d8d0a108681f149b4837715}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of ICNN'95 - International Conference on Neural Networks}
+      \field{title}{Particle swarm optimization}
+      \field{volume}{4}
+      \field{year}{1995}
+      \field{pages}{1942\bibrangedash 1948}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1109/ICNN.1995.488968
+      \endverb
+    \endentry
+    \entry{cho2006a}{article}{}
+      \name{author}{3}{}{%
+        {{hash=497eac5b643df4a1276b7bfb7603ad1d}{%
+           family={Cho},
+           familyi={C\bibinitperiod},
+           given={Ikuo},
+           giveni={I\bibinitperiod}}}%
+        {{hash=5838b6da8f61b6c3e8a8585d66aac35f}{%
+           family={Tada},
+           familyi={T\bibinitperiod},
+           given={Taku},
+           giveni={T\bibinitperiod}}}%
+        {{hash=fe281895ae98282d0bbb59767274f8a2}{%
+           family={Shinozaki},
+           familyi={S\bibinitperiod},
+           given={Yuzo},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{f3af182a10e6d5f0df10237b0313d63b}
+      \strng{fullhash}{f3af182a10e6d5f0df10237b0313d63b}
+      \strng{bibnamehash}{f3af182a10e6d5f0df10237b0313d63b}
+      \strng{authorbibnamehash}{f3af182a10e6d5f0df10237b0313d63b}
+      \strng{authornamehash}{f3af182a10e6d5f0df10237b0313d63b}
+      \strng{authorfullhash}{f3af182a10e6d5f0df10237b0313d63b}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Geophys. J. Int.}
+      \field{number}{1}
+      \field{title}{A generic formulation for microtremor exploration methods using three-component records from a circular array}
+      \field{volume}{165}
+      \field{year}{2006}
+      \field{pages}{236\bibrangedash 258}
+      \range{pages}{23}
+      \verb{doi}
+      \verb 10.1111/j.1365-246X.2006.02880.x
+      \endverb
+    \endentry
+    \entry{priestley1981}{book}{}
+      \name{author}{1}{}{%
+        {{hash=e664b4bf7a573078677c5a2cd5bba7d6}{%
+           family={Priestley},
+           familyi={P\bibinitperiod},
+           given={M.B.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier Science}%
+      }
+      \strng{namehash}{e664b4bf7a573078677c5a2cd5bba7d6}
+      \strng{fullhash}{e664b4bf7a573078677c5a2cd5bba7d6}
+      \strng{bibnamehash}{e664b4bf7a573078677c5a2cd5bba7d6}
+      \strng{authorbibnamehash}{e664b4bf7a573078677c5a2cd5bba7d6}
+      \strng{authornamehash}{e664b4bf7a573078677c5a2cd5bba7d6}
+      \strng{authorfullhash}{e664b4bf7a573078677c5a2cd5bba7d6}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9780125649223}
+      \field{series}{{Probability and Mathematical Statistics}}
+      \field{title}{{Spectral Analysis and Time Series, Two-Volume Set: Volumes I and II}}
+      \field{year}{1982}
+    \endentry
+    \entry{henstridge1979}{article}{}
+      \name{author}{1}{}{%
+        {{hash=5e9faa277453d81e01e14255c4880025}{%
+           family={Henstridge},
+           familyi={H\bibinitperiod},
+           given={John\bibnamedelima D.},
+           giveni={J\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{5e9faa277453d81e01e14255c4880025}
+      \strng{fullhash}{5e9faa277453d81e01e14255c4880025}
+      \strng{bibnamehash}{5e9faa277453d81e01e14255c4880025}
+      \strng{authorbibnamehash}{5e9faa277453d81e01e14255c4880025}
+      \strng{authornamehash}{5e9faa277453d81e01e14255c4880025}
+      \strng{authorfullhash}{5e9faa277453d81e01e14255c4880025}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Geophysics}
+      \field{number}{2}
+      \field{title}{A signal processing method for circular arrays}
+      \field{volume}{44}
+      \field{year}{1979}
+      \field{pages}{179\bibrangedash 184}
+      \range{pages}{6}
+    \endentry
+    \entry{cho2022}{article}{}
+      \name{author}{3}{}{%
+        {{hash=5a1d69bdfcd9388589f9bd84d0e10fac}{%
+           family={Cho},
+           familyi={C\bibinitperiod},
+           given={I},
+           giveni={I\bibinitperiod}}}%
+        {{hash=f324f57b44d8e3fb900c6e12fd6c2a23}{%
+           family={Yoshida},
+           familyi={Y\bibinitperiod},
+           given={K},
+           giveni={K\bibinitperiod}}}%
+        {{hash=e1227cd2b93865bd77fb368a5105a809}{%
+           family={Uebayashi},
+           familyi={U\bibinitperiod},
+           given={H},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{4a13eaef5a1a5c1fd07490f711a62eb4}
+      \strng{fullhash}{4a13eaef5a1a5c1fd07490f711a62eb4}
+      \strng{bibnamehash}{4a13eaef5a1a5c1fd07490f711a62eb4}
+      \strng{authorbibnamehash}{4a13eaef5a1a5c1fd07490f711a62eb4}
+      \strng{authornamehash}{4a13eaef5a1a5c1fd07490f711a62eb4}
+      \strng{authorfullhash}{4a13eaef5a1a5c1fd07490f711a62eb4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0956-540X}
+      \field{journaltitle}{Geophys. J. Int.}
+      \field{month}{09}
+      \field{number}{1}
+      \field{title}{{Microtremor surveys based on rotational seismology: theoretical analysis with focus on separation of Rayleigh and Love waves in general wavefield of microtremors}}
+      \field{volume}{228}
+      \field{year}{2022}
+      \field{pages}{589\bibrangedash 603}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1093/gji/ggab358
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1093/gji/ggab358
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1093/gji/ggab358
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

@@ -1,0 +1,419 @@
+%SPDX-FileCopyrightText: Copyright 2023 Harusato Kimura
+\documentclass[a4paper, 10pt]{article}
+
+\usepackage{float}
+\usepackage{amsmath,amsfonts}
+\usepackage{amssymb}
+\usepackage{arydshln}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{geometry}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{luatexja-fontspec}
+\usepackage{indentfirst}
+\usepackage{sectsty}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage[
+  backend = biber,
+  style = ieee, 
+  eprint = false,
+  url = false,
+  isbn = false
+]{biblatex}
+
+\addbibresource{ref.bib}
+
+\geometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
+
+\setmainjfont{Noto Serif CJK JP}
+\setmainfont{STIX-Two-Text}
+\setsansfont{Helvetica-Neue}
+\setsansjfont{Noto Sans CJK JP}
+\setmathfont{STIX-Two-Math}
+\setmonofont{Fira-Code}
+%\setmainjfont{Noto Sans CJK JP}
+%\setmathfont{FiraMath}
+%\setmainfont{Fira-Sans}
+%\setsansfont{Fira-Sans}
+%\setmonofont{Fira-Mono}
+
+% setsansjfont seems to set gtfamily font
+\sectionfont{\sffamily\gtfamily\large\bfseries}
+\subsectionfont{\sffamily\gtfamily\normalsize\bfseries}
+%\sectionfont{\rmfamily\large\bfseries}
+%\subsectionfont{\rmfamily\normalsize\bfseries}
+
+\lstset{
+  frame={tb},
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbers=left,
+  language=C++,
+  basicstyle=\ttfamily\scriptsize,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  commentstyle=\color{magenta},
+  morecomment=[l][\color{navy}]{\#}
+}
+
+\setlength{\parindent}{11pt}
+
+\title{
+\vspace{-1.5cm}
+プログラムの説明
+}
+\author{木村春里}
+
+\begin{document}
+
+\maketitle
+
+\section{はじめに}
+
+このプログラムは、\cite{kimura2023a}および\cite{kimura2023b}において用いられたプログラム
+の核の部分を比較的簡潔な形で書き直したものです。動作確認はUbuntu 22.04 LTS上で行っています。
+
+\section{設定ファイルとプログラム}
+
+\subsection{プログラム}
+
+このプログラムはいくつかの独立したプログラムから構成されます。具体的には、
+\begin{enumerate}
+  \item \texttt{pre\_process}: 自己相関関数等の統計量を計算するプログラム
+  \item \texttt{spac}: ただのSPAC法\cite{okada2003}
+  \item \texttt{fkanaly}: CaponのMLM法\cite{capon1969}
+  \item \texttt{dspac}: \cite{kimura2023a, kimura2023b}の内容に対応するプログラム
+\end{enumerate}
+の4つのプログラムに別れています。
+それぞれのプログラムとソースコードの対応は\texttt{Makefile}をご覧ください。
+
+これらのプログラムは\texttt{run.py}によってまとめられているため、
+直接にこれらを実行する必要はありません。
+
+\subsection{設定ファイル}
+
+\texttt{run.py}を実行するには、設定ファイルとして、
+\begin{enumerate}
+  \item \texttt{params.json}
+  \item \texttt{array\_coord.csv}
+\end{enumerate}
+を用意する必要があります。
+\texttt{params.json}は、先述したそれぞれのプログラムに対して、
+アレーの情報や計算のためのパラメータの情報を伝えるためのものです。
+\texttt{array\_coord.csv}は観測点の座標と、その観測点において得られた波形のファイル名
+を対応付けるためのファイルです。
+\texttt{params.json}および\texttt{array\_coord.csv}の例をListing 1および2に示します。
+
+\begin{lstlisting}[language = java, caption=\texttt{params.json}]
+{
+  "seg_len": 2048,
+  "n_smoothing": 8,
+  "SPAC": {
+    "arrays": ["3p0m3s", "1p7m3s"],
+    "3p0m3s":["S02", "S03", "S03", "S04", "S04", "S02"],
+    "1p7m3s":["S01", "S02", "S01", "S03", "S01", "S04"]
+  }, 
+  "FK": {
+    "bounds": [100, 1000],
+    "density": [500, 36]
+  },
+  "DSPAC": {
+    "array": ["S02", "S03", "S04"],
+    "n_particle": 10000,
+    "n_itr": 1000,
+    "w4loc": 1.4,
+    "w4glo": 0.7
+  }
+}
+\end{lstlisting}
+
+\texttt{params.json}では、基本的なパラメータとして\texttt{"seg\_len"}および
+\texttt{"n\_smoothing"}を決める必要があります。前者は、観測波形をセグメントに分割する際の、
+1セグメントあたりのサンプル数です。
+なお、セグメントは50\%のオーバーラップでHann窓によって切り出しを行っています。
+\texttt{"n\_smoothing"}は、自己共分散関数のスムージングのためのパラメータです。
+スムージングは重み$0.25,\,0.5,\,0.25$の三角形フィルタを\texttt{"n\_smoothing"}回
+適用することにより行っています。
+
+\texttt{"SPAC"}、\texttt{"FK"}、\texttt{"DSPAC"}は、それぞれオプショナルなパラメータです。
+その解析を行いたい場合は\texttt{params.json}にて
+各パラメータの指定を行えばよいという仕組みになっています。
+
+\texttt{"SPAC"}では、\texttt{"arrays"}においてアレーの名前を指定し、
+そのアレー名に対して使用する自己相関関数を与える観測点の組合わせを指定します。
+例では、\texttt{"3p0m3s"}なる名称のアレーでは、S02-S03、S03-S04、S04-S02の観測点ペアから
+計算される自己相関関数の実部の算術平均をSPAC係数とするということになっています。
+
+\texttt{"FK"}では、\texttt{"bounds"}と\texttt{"density"}なるパラメータの指定が必要です。
+前者は、探索および描画する位相速度の下限と上限を指定するパラメータです。
+例では、$100\,\symrm{ms^{-1}}$から$1000\,\symrm{ms^{-1}}$を対象としています。
+後者は位相速度の絶対値および方位角をいくつのグリッドに分割するかを指定するためのものです。
+例では、絶対値方向に500分割、方位角方向に36分割するように指定しています。
+実際の解析は、位相速度において下限から上限までを500のグリッドに等分割し、それを対応する
+スローネスに変換して計算、出力しています。
+
+\texttt{"DSPAC"}では、使用する観測点を\texttt{"array"}で指定し、
+計算に必要な計算パラメータをそれぞれ指定する必要があります。
+使用する観測点数は、増やせば増やすほど計算時間が爆発的に長くなるため、注意が必要です。
+\texttt{"n\_particle"}、\texttt{"n\_itr"}、\texttt{"w4loc"}、\texttt{"w4glo"}はそれぞれ
+Particle swarm optimization (PSO)\cite{kennedy1995}における
+粒子数と最大反復回数、ローカルベストおよびグローバルベストに対する重み係数です。
+
+\begin{lstlisting}[caption=\texttt{array\_coord.csv}]
+  +0.000000, +0.000000, S01.csv
+  -1.732050, -0.000000, S02.csv
+  +0.866025, -1.499999, S03.csv
+  +0.866025, +1.499999, S04.csv
+\end{lstlisting}
+
+\texttt{array\_coord.csv}には、平面直行座標系での$x$座標、$y$座標、
+およびデータファイルの名称を記入します。座標の単位は$\symrm{m}$で、それぞれのカラムは
+カンマスペース区切りであることを想定しています。
+座標の原点等は特別に指定する必要はありません。
+
+\texttt{S01.csv}のようなデータファイルは、それぞれ2つのカラムを有するファイルであり、
+1列目に時間、2列目に値を持つようなものであると想定しています。こちらも、
+データはカンマスペース(``,$\;\;$'')区切りであるものとしています。
+
+以上のような設定ファイル、データファイルはすべて同一のディレクトリにあることが想定されており、
+実行の際には、\texttt{python3 run.py path/to/params.json}のようにすることを想定しています。
+
+\subsection{出力ファイル}
+
+出力ファイルは、\texttt{params.json}の存在するディレクトリに\texttt{results}なる
+ディレクトリを作成し、それ以下に配置されます。
+\texttt{results}直下には、\texttt{inputs}、\texttt{statistics}、\texttt{spac}、
+\texttt{fk}、\texttt{dspac}なるディレクトリが配置されます。
+\texttt{inputs}にはオフセットを取り除いた各観測点における波形データ、
+\texttt{statistics}には自己共分散関数と自己相関関数が含まれています。
+また、\texttt{spac}には位相速度とSPAC係数が含まれています。
+\texttt{fk}には、各周波数におけるFKスペクトルが\texttt{FK\_}なる形で出力されており、
+位相速度が\texttt{phv\_fk.csv}として出力されています。
+定量的な方位情報に関してはFWDSDのピークを与えるスローネスにおいて方位角方向に
+Fourier係数を計算した際の実部および虚部が\texttt{re\_and\_im\_coeff.csv}に、
+それを振幅情報と位相情報に分離したものがそれぞれ\texttt{amps.csv}、\texttt{phases.csv}に
+出力されています。
+
+\begin{itemize}[label = $-$]
+  \item \texttt{results}
+    \begin{itemize}[label = $-$]
+      \item \texttt{inputs}
+        \begin{itemize}[label = $-$]
+          \item \texttt{*.csv}: オフセットを除去した入力時系列
+        \end{itemize}
+      \item \texttt{statistics}
+        \begin{itemize}[label = $-$]
+          \item \texttt{UD\_*.csv}: 自己共分散関数
+          \item \texttt{CCF\_*.csv}: 自己相関関数
+        \end{itemize}
+      \item \texttt{spac}
+        \begin{itemize}[label = $-$]
+          \item \texttt{phv\_*.csv}: 位相速度
+          \item \texttt{spr\_*.csv}: SPAC係数
+        \end{itemize}
+      \item \texttt{fk}
+        \begin{itemize}[label = $-$]
+          \item \texttt{FK\_*.csv}: 各振動数におけるFKスペクトル
+          \item \texttt{re\_and\_im\_coeff.csv}: FKスペクトルのピークにおける方位角方向のFourier係数
+          \item \texttt{amps.csv}: \texttt{re\_and\_im\_coeff.csv}を振幅と位相に分解した際の振幅情報
+          \item \texttt{phases.csv}: \texttt{re\_and\_im\_coeff.csv}を振幅と位相に分解した際の位相情報
+        \end{itemize}
+      \item \texttt{dspac}
+        \begin{itemize}[label = $-$]
+          \item \texttt{result\_real.csv}: 振動数、位相速度\cite{kimura2023a}、$X_2$、$Y_2$
+          \item \texttt{result\_imag.csv}: 振動数、$X_1$、$Y_1$
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\section{手法の説明}
+
+\subsection{基本的な定式化}
+
+はじめに、対象とする波動場の位置$(r, \theta)$における上下動成分が
+1変量の3次元定常確率過程として表されると仮定をします。
+このとき、そのサンプルパス$Z(t, r, \theta)$はスペクトル表示をもち、
+Fourier変換をどのように定義するかによってその表現にはバリエーションがありますが、
+ここではそのスペクトル表示を形式的に
+\begin{eqnarray}
+  Z(t, r, \theta) = 
+  \int_{-\pi}^{\pi} \int_{0}^{\infty} \int_{-\infty}^{\infty} 
+  \symrm{e}^{- \symrm{i} \omega t - \symrm{i}kr\cos(\phi - \theta)} 
+  \zeta(\omega, k, \phi) \symrm{d}\omega k\symrm{d}k \symrm{d}\phi
+\end{eqnarray}
+のように定義しています。
+なおここに、$t$は時間、$(r, \theta)$は2次元極座標で表された空間座標、
+$\symrm{e}$はNapier数、$\symrm{i}$は虚数単位、$\omega$は角振動数、
+$(k,\phi)$は2次元極座標で表された波数ベクトル、$\zeta$はサンプルパスのFourierスペクトルに
+相当する量です。
+
+この定義を認めると、
+\begin{eqnarray}
+  F(\omega, k, \phi) = E\left[ \left| \zeta(\omega, k, \phi) \right|^2 \right]
+\end{eqnarray}
+により定義される$Z(t, r, \theta)$の3次元パワースペクトルである
+Frequency-wavenumber-direction spectral density (FWDSD) $F(\omega, k, \phi)$は、
+絶対波数$k$、振動数$\omega$、\textgt{\textbf{伝播方向}}$\phi$の成分波のもつパワーを表示したものとなります。
+\cite{kimura2023b}においては、$\phi$は到来方向としている点にご注意ください。
+なお、$E[\cdot]$は$\cdot$の期待値を表します。
+
+FWDSDは$\omega$、$k$、$\phi$について直交性を有するため、
+\begin{eqnarray}
+  E\left[ \zeta(\omega, k, \phi) \zeta^*(\omega', k', \phi') \right]
+  \symrm{d}\omega k\symrm{d}k \symrm{d}\phi \symrm{d}\omega' k'\symrm{d}k' \symrm{d}\phi'
+  &=&
+  \delta(\omega' - \omega)\delta(k' - k) \delta(\phi' - \phi)
+  \nonumber
+  \\
+  &&F(\omega, k, \phi) 
+  \symrm{d}\omega \symrm{d}\omega' k\symrm{d}k \symrm{d}k' \symrm{d}\phi\symrm{d}\phi'
+\end{eqnarray}
+が成り立つ\cite{cho2006a, priestley1981}ことを利用すると、
+周波数領域における、空間ラグ$(\rho, \psi)$に対する
+自己共分散関数\footnote{各観測点における上下動成分をそれぞれ1変量の1次元定常確率過程とみなす場合にはクロススペクトルに相当します。}$G(\omega, \rho, \psi)$は、
+\begin{eqnarray}
+  G(\omega, \rho, \psi) 
+  &=& \mathcal{F} \left[E\left[ Z^*(0, 0, 0) Z(\tau, \rho, \psi) \right]\right] 
+  \nonumber\\ 
+  &=& \int_{-\pi}^{\pi} \int_{0}^{\infty} \symrm{e}^{-\symrm{i}k\rho\cos(\phi - \psi)}
+  F(\omega, k, \phi) k\symrm{d}k\symrm{d}\phi 
+  \label{e:auto-covariance}
+\end{eqnarray}
+のように表されます。ただしここに、$F[\cdot]$は$\cdot$の時間ラグ$\tau$と角振動数$\omega$についての
+Fourier変換を表します。
+
+FWDSDをFrequency-direction spectral density (FDSD) $f(\omega, \phi)$と
+有効波数$k^{\symrm{eff}}(\omega)$に分解すると、
+\begin{eqnarray}
+  F(\omega, k, \phi) = f(\omega, \phi) \frac{\delta(k - k^{\symrm{eff}}(\omega))}{k}
+\end{eqnarray}
+のように表されること\cite{henstridge1979, cho2022}を利用して式(\ref{e:auto-covariance})
+を変形すると、
+\begin{eqnarray}
+  G(\omega, \rho, \psi) 
+  &=& \int_{-\pi}^{\pi} \symrm{e}^{-\symrm{i}k^{\symrm{eff}}(\omega)\rho\cos(\phi - \psi)}
+  f(\omega, \phi) \symrm{d}\phi 
+\end{eqnarray}
+となります。
+
+続いて、自己共分散関数をノーマライズすることにより、自己相関関数\footnote{自己共分散関数をクロススペクトルと見た場合にはComplex coherency function (CCF)と呼ぶこともできます。}
+\begin{eqnarray}
+  \gamma(\omega, \rho, \psi) &=& \frac{G(\omega, \rho, \psi)}{G(\omega, 0, 0)} 
+  \nonumber\\
+  %&=& \frac{
+  %  \displaystyle
+  %  \int_{-\pi}^{\pi} \symrm{e}^{-\symrm{i}k^{\symrm{eff}}(\omega)\rho\cos(\phi - \psi)}
+  %  f(\omega, \phi) \symrm{d}\phi
+  %}{
+  %  \displaystyle
+  %  \int_{-\pi}^{\pi} f(\omega, \phi) \symrm{d}\phi
+  %}
+  %\nonumber\\
+  &=& \int_{-\pi}^{\pi} \symrm{e}^{-\symrm{i}k^{\symrm{eff}}(\omega)\rho\cos(\phi - \psi)}
+  \lambda(\omega, \phi) \symrm{d}\phi
+  \label{e:auto-correlation}
+\end{eqnarray}
+が得られます。ただしここに、$\lambda(\omega, \phi)$はNormalized FDSD (NFDSD)であり、
+\begin{eqnarray}
+  \lambda(\omega, \phi) 
+  = \frac{f(\omega, \phi)}{\int_{-\pi}^{\pi}f(\omega, \phi)\symrm{d}\phi}
+  %= \frac{f(\omega, \phi)}{\displaystyle\int_{-\pi}^{\pi}f(\omega, \phi)\symrm{d}\phi}
+\end{eqnarray}
+のように定義される量です。
+
+各振動数において、NFDSDのFourier級数展開を、
+\begin{eqnarray}
+  \lambda(\omega, \phi) &=& 
+  \frac{1}{2\pi}\sum_{m = -\infty}^{\infty}\symrm{e}^{\symrm{i}m\phi}\Lambda_m(\omega), 
+  \label{e:NFDSD_f_f}
+  \\
+  \Lambda_m(\omega) &=& 
+  \int_{-\pi}^{\pi} \symrm{e}^{-\symrm{i}m\phi} \lambda(\omega, \phi) \symrm{d}\phi
+  \label{e:NFDSD_f_b}
+\end{eqnarray}
+のように定義します。
+式(\ref{e:NFDSD_f_f})を式(\ref{e:auto-correlation})に代入し、整理すると、
+\begin{eqnarray}
+  \gamma(\omega, \rho, \psi) &=& 
+  \sum_{-\infty}^{\infty} \Lambda_m(\omega) \symrm{e}^{\symrm{i}m\psi} 
+  \symrm{i}^n J_m(k^{\symrm{eff}}(\omega)\rho)
+\end{eqnarray}
+を得ます。ただしここに、$J_m(\cdot)$は$m$次の第一種Bessel関数です。
+さらに、$\Lambda_m(\omega)$の実部および虚部を$X_m(\omega)$、$Y_m(\omega)$
+とすると、$\gamma(\omega, \rho, \psi)$の実部および虚部は、
+\begin{eqnarray}
+  \symrm{Re}\left[ \gamma(\omega, \rho, \psi) \right] &=&
+  J_0(k^{\symrm{eff}}\rho) + 2\sum_{n = 1}^{\infty} (-1)^n 
+  \left( X_{2n}\cos 2n\psi - Y_{2n}\sin 2n\psi \right)
+  J_{2n}\left(k^{\symrm{eff}}\rho\right)
+  %
+  \\
+  %
+  \symrm{Im}\left[ \gamma(\omega, \rho, \psi) \right] &=&
+  - 2\sum_{n = 1}^{\infty} (-1)^n 
+  \left( X_{2n - 1}\cos (2n - 1)\psi - Y_{2n - 1}\sin (2n - 1)\psi \right)
+  J_{2n - 1}\left(k^{\symrm{eff}}\rho\right)
+\end{eqnarray}
+のように表されます。なおここに、$\symrm{Re}[\cdot]$、$\symrm{Im}[\cdot]$はそれぞれ$\cdot$の
+実部および虚部を表します。なお、$k^{\symrm{eff}}$、$X_m$、$Y_m$はいずれも$\omega$に依存しますが、
+簡潔さのため$\omega$を省略しています。
+
+\subsection{有限個の観測点による計算}
+
+空間ラグ$(\rho_{ij}, \psi_{ij})$をもつ観測点ペアによる同時観測に対し、
+目的関数$g_{\symrm{re}}$および$g_{\symrm{im}}$を、
+\begin{eqnarray}
+  &&g_{\mathrm{re}}\left(k^{\symrm{eff}}, X_2, Y_2, \cdots, X_{2n_{\mathrm{max}}}, Y_{2n_{\mathrm{max}}}\right) =
+  \notag\\
+  &&\quad
+  \sum_{i<j} \Bigg(\symrm{Re}\left[\gamma(\omega, \rho_{ij}, \psi_{ij})\right]
+  - J_0\left(k^{\mathrm{eff}}\rho_{ij}\right) 
+  - 2\sum_{n=1}^{n_{\mathrm{max}}}
+  (-1)^n J_{2n}\left(k^{\mathrm{eff}}\rho_{ij}\right) 
+  \left(X_{2n}\cos 2n\psi_{ij} - Y_{2n}\sin 2n\psi_{ij}\right)
+  \Bigg)^2, 
+  \label{e:obj_func_re}
+  \\
+  &&g_{\mathrm{im}}\left(k^{\symrm{eff}}, X_1, Y_1, \cdots, X_{2n_{\mathrm{max}}-1}, Y_{2n_{\mathrm{max}}-1}\right) = 
+  \notag\\
+  &&\quad
+  \sum_{i<j} \Bigg(\symrm{Im}\left[\gamma(\omega, \rho_{ij}, \psi_{ij})\right]
+  + 2\sum_{n=1}^{n_{\mathrm{max}}}
+  (-1)^n J_{2n-1}\left(k^{\mathrm{eff}}\rho_{ij}\right) 
+  \left(X_{2n-1}\cos (2n-1)\psi_{ij} - Y_{2n-1}\sin (2n-1)\psi_{ij}\right)
+  \Bigg)^2,
+  \label{e:obj_func_im}
+\end{eqnarray}
+のように定義します。ただしここに$n_{\symrm{max}}$は適当に設定する整数ですが、
+本プログラムにおいては、$n_{\symrm{max}} = 2$と予め設定しています。
+
+本プログラムでははじめに、観測値から計算された
+$\gamma(\omega, \rho_{ij}, \psi_{ij})$の実部から、Particle Swarm Optimization (PSO) 
+\cite{kennedy1995} を用いて式(\ref{e:obj_func_re})を最小化するような
+$k^{\symrm{eff}}$、$X_1, Y_1$を求めています。
+続いて、ここで得られた$k^{\symrm{eff}}$と、
+観測値から計算された$\gamma(\omega, \rho_{ij}, \psi_{ij})$の虚部
+を用いて式(\ref{e:obj_func_im})を最小化するような
+$X_2, Y_2$を求めています。なお、$n_{\symrm{max}} = 2$としていることにより、
+以上のプロセスにおいて$X_3$、$Y_3$、$X_4$、$Y_4$の
+値も定まりますが、これらの変数は感度が非常に小さく、
+あくまでバッファとしての機能しか有しません。
+
+以上より、本プログラムでは、見かけの位相速度
+$c^{\symrm{eff}}(\omega) = \omega / k^{\symrm{eff}}(\omega)$
+に加え、NFDSDをFourier級数展開した際の第1次、2次のFourier係数である
+$\Lambda_1(\omega)$および$\Lambda_2(\omega)$が各振動数において求められるということになります。
+
+
+% -----------------------------------------------------------------------------
+\printbibliography
+% -----------------------------------------------------------------------------
+
+\appendix
+\end{document}
